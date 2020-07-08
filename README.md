@@ -1,0 +1,1 @@
+# pricex-product-consumer
