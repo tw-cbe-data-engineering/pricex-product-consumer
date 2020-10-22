@@ -1,5 +1,18 @@
 plugins {
     id 'java'
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+
+shadowJar {
+    zip64 true
+    mergeServiceFiles()
+    exclude "META-INF/*.SF"
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    exclude 'META-INF/*.txt'
+    exclude 'META-INF/*.pom'
+    exclude 'META-INF/*.txt'
+    exclude "LICENSE*"
 }
 
 group 'org.example'
@@ -9,6 +22,7 @@ repositories {
 }
 
 jar {
+    zip64 true
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
@@ -26,6 +40,10 @@ dependencies {
     compile "org.apache.flink:flink-clients_2.11:1.11.1"
     compile "org.apache.pulsar:pulsar-flink:2.6.1"
     compile 'org.apache.flink:flink-connector-filesystem_2.11:1.11.1'
+    compile 'org.apache.flink:flink-parquet_2.11:1.11.1'
+    compile 'org.apache.parquet:parquet-avro:1.11.1'
+    compile 'org.apache.hadoop:hadoop-core:1.2.1'
+    compile 'org.json:json:20200518'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
